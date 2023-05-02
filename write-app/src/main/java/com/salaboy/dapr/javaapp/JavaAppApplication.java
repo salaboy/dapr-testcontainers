@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import io.dapr.client.domain.State;
 
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class JavaAppApplication {
 	@Value("${STATE_STORE_NAME:statestore}")
 	private String STATE_STORE_NAME = "";
 
-	private DaprClient client = new DaprClientBuilder().build();
+	private DaprClient client;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JavaAppApplication.class, args);
@@ -54,6 +55,11 @@ public class JavaAppApplication {
 	@DeleteMapping("/")
 	public void deleteAllValues() {
 		client.deleteState(STATE_STORE_NAME, "values").block();
+	}
+
+	@PostConstruct
+	void initDapr() {
+		client = new DaprClientBuilder().build();
 	}
 
 	public record MyValues(List<String> values) {}
