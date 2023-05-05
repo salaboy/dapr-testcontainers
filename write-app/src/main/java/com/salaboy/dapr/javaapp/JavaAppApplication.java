@@ -15,8 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.dapr.client.domain.State;
 
-
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.ArrayList;
 
