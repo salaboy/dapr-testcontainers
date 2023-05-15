@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salaboy.dapr</groupId>
-	<artifactId>write-app</artifactId>
+	<artifactId>subscriber-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>write-app</name>
-	<description>Dapr Statecomponent Write</description>
+	<name>read-app</name>
+	<description>Dapr Subscriber App</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -29,12 +29,6 @@
 			<groupId>io.dapr</groupId>
 			<artifactId>dapr-sdk-springboot</artifactId>
 			<version>1.8.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>reactor-core</groupId>
-					<artifactId>reactor-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>
@@ -52,44 +46,16 @@
 			<artifactId>spring-boot-testcontainers</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <configuration>
-						<image>
-							<builder>dashaun/builder:tiny</builder>
-						</image>
-                </configuration> -->
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 	<repositories>
 		<repository>
