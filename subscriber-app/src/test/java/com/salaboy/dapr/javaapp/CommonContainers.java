@@ -5,6 +5,7 @@ import org.junit.runners.model.Statement;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.DockerClientFactory;
+import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.utility.MountableFile;
@@ -52,15 +53,19 @@ public interface CommonContainers {
 
     GenericContainer<?> daprSidecar = new GenericContainer<>("daprio/daprd:edge")
             .withCommand("./daprd",
-                    "-app-id", "subscriber-app",
-                    "-placement-host-address", "placement:50006",
+                    "--app-id", "subscriber-app",
+                    "--app-port", "8082",
+                    "--app-channel-address", "host.testcontainers.internal",
+                    "--app-protocol", "http",
+                    "--placement-host-address", "placement:50006",
                     "--dapr-listen-addresses=0.0.0.0",
-                    "-components-path", "/components")
+                    "--components-path", "/components")
             .withExposedPorts(50001)
             .withCopyFileToContainer(
                     MountableFile.forClasspathResource("components"),
                     "/components/")
             .withNetwork(daprNetwork)
+            .withAccessToHost(true)
             .withReuse(true);
 
     GenericContainer<?> daprPlacement = new GenericContainer<>("daprio/dapr")
@@ -72,6 +77,7 @@ public interface CommonContainers {
 
     @DynamicPropertySource
     static void daprProperties(DynamicPropertyRegistry registry) {
+        Testcontainers.exposeHostPorts(8082);
         System.setProperty("dapr.grpc.port", daprSidecar.getMappedPort(50001).toString());
     }
 

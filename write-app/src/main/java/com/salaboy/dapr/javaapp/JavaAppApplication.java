@@ -40,7 +40,7 @@ public class JavaAppApplication {
 	}
 
 	@PostMapping("/")
-	public MyValues storeValues(@RequestParam("value") String message) {
+	public MyValues storeValues(@RequestParam("message") String message) {
 		State<MyValues> results = client.getState(STATE_STORE_NAME, "values", MyValues.class).block();
 
 		MyValues valuesList = results.getValue();
@@ -51,9 +51,10 @@ public class JavaAppApplication {
 		} else {
 			valuesList.values().add(message);
 		}
-	
+		System.out.println("Storing message: " + message);
 		client.saveState(STATE_STORE_NAME, "values", valuesList).block();
 
+		System.out.println("Publishing Event ( to "+PUB_SUB_NAME+" / "+ PUB_SUB_TOPIC +" ) with message: " + message);
 		client.publishEvent(PUB_SUB_NAME, PUB_SUB_TOPIC, message).block();
 
 		return valuesList;

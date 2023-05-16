@@ -1,0 +1,29 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: read-app
+spec:
+  template:
+    metadata:
+      annotations:  
+        dapr.io/app-id: read-app
+        dapr.io/app-port: "8080"
+        dapr.io/enabled: "true" 
+        dapr.io/metrics-port: "9092"
+        autoscaling.knative.dev/min-scale: "{{ .Values.minScale }}"
+    spec:
+      containerConcurrency: 0
+      containers:
+        - image: docker.io/salaboy/dapr-read-app:test-containers
+          name: user-container
+          env: 
+          - name: STATE_STORE_NAME
+            value: statestore
+          livenessProbe:
+            httpGet:
+              path: /health/readiness
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /health/liveness
+              port: 8080

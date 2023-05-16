@@ -20,11 +20,11 @@ class JavaAppApplicationTests {
 
     @Test
     void canPostToEndpoint() {
-        RestAssured.given().port(localPort).param("value", "foo")
+        RestAssured.given().port(localPort).param("message", "foo")
                 .when().post("/")
                 .then().statusCode(200);
 
-        RestAssured.given().port(localPort).param("value", "bar")
+        RestAssured.given().port(localPort).param("message", "bar")
                 .when().post("/")
                 .then()
                 .statusCode(200)
