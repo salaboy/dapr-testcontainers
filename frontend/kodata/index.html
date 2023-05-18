@@ -362,6 +362,29 @@
             getStoredValues();
         }
 
+        function dosomesql() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "/sql", false);
+            xmlHttp.send(null);
+            Toastify({
+                        text: "FROM SQL "+xmlHttp.responseText,
+                        duration: 3000,
+                        destination: "https://www.salaboy.com",
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "center", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, #00b09b, #96c93d)",
+                        },
+                        onClick: function(){} // Callback after click
+                    }).showToast();
+                
+            //document.getElementById("storedValuesText").innerHTML = xmlHttp.responseText;
+        }
+
+
 
     </script>
 </head>
@@ -376,9 +399,10 @@
         </div>
         <div class="info">
             Dapr App V1.0
+            <!-- <button id="dosomesql" onclick="dosomesql()">SQL</button> -->
         </div>
         <div class="logo">
-            <img src="test-containers-logo.png" alt="TestContainers">
+            <img src="testcontainers-logo.png" alt="TestContainers">
         </div>
     </div>
  

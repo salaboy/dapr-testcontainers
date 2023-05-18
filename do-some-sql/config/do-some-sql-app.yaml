@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: docker.io/salaboy/do-some-sql:testcontainers
+        image: docker.io/salaboy/do-some-sql:testcontainers-1
         env: 
           - name: SPRING_DATASOURCE_URL
             value: jdbc:postgresql://${DB_ENDPOINT}:${DB_PORT}/postgres

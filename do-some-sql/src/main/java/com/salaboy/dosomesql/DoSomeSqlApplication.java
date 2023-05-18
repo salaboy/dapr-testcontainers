@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 
 @SpringBootApplication
 public class DoSomeSqlApplication {
@@ -38,6 +42,7 @@ public class DoSomeSqlApplication {
 @RequestMapping("/customers")
 class CustomerController {
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
+	
 	private final CustomerRepository customerRepository;
 
 	CustomerController(CustomerRepository customerRepository) {
@@ -74,5 +79,5 @@ class CustomerNotFoundException extends RuntimeException {
 record Customer(@Id Long id, @NotEmpty String firstname, @NotEmpty String lastname) {
 }
 
-interface CustomerRepository extends ListCrudRepository<Customer, Long> {
-}
+@Repository
+interface CustomerRepository extends ListCrudRepository<Customer, Long> {}

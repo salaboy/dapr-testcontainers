@@ -95,6 +95,33 @@ func subscriptionsHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func sqlHandler(w http.ResponseWriter, r *http.Request) {
+
+	//Leverage Go's HTTP Post function to make request
+	resp, err := http.Get("http://localhost:3500/v1.0/invoke/do-some-sql-app/method/customers")
+	//Handle Error
+	if err != nil {
+		log.Fatalf("An Error Occured %v", err)
+	}
+	defer resp.Body.Close()
+
+	log.Println("Result: ")
+	log.Println(resp.StatusCode)
+
+	if resp.StatusCode == http.StatusOK {
+		bodyBytes, err := io.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		respondWithJSON(w, http.StatusOK, string(bodyBytes))
+
+	} else {
+		respondWithJSON(w, http.StatusOK, "no values yet.")
+	}
+
+}
+
 func readHandler(w http.ResponseWriter, r *http.Request) {
 
 	//Leverage Go's HTTP Post function to make request
@@ -146,6 +173,7 @@ func main() {
 	r.HandleFunc("/write", writeHandler).Methods("POST")
 	r.HandleFunc("/delete", deleteHandler).Methods("POST")
 	r.HandleFunc("/read", readHandler).Methods("GET")
+	r.HandleFunc("/sql", sqlHandler).Methods("GET")
 	r.HandleFunc("/subscriptions", subscriptionsHandler).Methods("GET")
 
 	// Add handlers for readiness and liveness endpoints
