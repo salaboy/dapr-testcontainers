@@ -1,6 +1,6 @@
 apiVersion: v2
-description: A Helm chart for the App
-name: java-app
+description: A Helm chart for the Dapr Testcontainers Demo App
+name: dapr-testcontainers-app
 version: v0.1.0
 type: application
 icon: https://salaboy.files.wordpress.com/2019/07/avatar.png
