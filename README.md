@@ -139,7 +139,12 @@ Now imagine, that you don't want developers to go through installing a local Kub
 In local development, you want to start the same services that we deployed to Kubernetes but locally. Depending on which technology stack you are using to develop each service, is the workflow that developers will adopt to run these services locally. 
 Because the application is composed by multiple services, it will be important to have a simple way to start them all and make sure that they are wired together (meaning that they can talk to each other or access to shared infrastructural components).
 
-You can start each service with: `mvn spring-boot:run-test` from inside each service directory. 
+You can start each service with: 
+```
+mvn spring-boot:test-run
+``` 
+
+from inside each service directory (`read-app/`, `write-app/`, `subscriber-app/`). 
 
 By running these application with `run-test` we are leveraging the Testcontainers configurations, usually being used to do integration tests for our services, but for local development. 
 
@@ -147,14 +152,14 @@ As these configurations are all starting the Dapr Sidecar and configuring the in
 
 Once the services (`read-app`,`write-app` and `subscriber-app`) are started, you can send requests to check that the services are accessing the same infrastructure as well as using the Dapr APIs. 
 
-Send a request to the `write-app` (running on the port 8080):
+Send a request to the `write-app` (running on the port 8081):
 ```
-curl POST "http://localhost:8080/?value=hello world"
+curl -X POST "http://localhost:8081/?message=hello-world"
 ```
 
-Check now that the `read app` (running on the port 8081) is getting the value that we sent to the `write-app`:
+Check now that the `read app` (running on the port 8080) is getting the value that we sent to the `write-app`:
 ```
-curl http://localhost:8081/
+curl http://localhost:8080/
 ```
 
 Finally, you can check the logs from the `subscriber-app` to see that it received a notification or use the application APIs (running on the port 8082): 
