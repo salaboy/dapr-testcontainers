@@ -165,7 +165,7 @@ curl http://localhost:8080/
 Finally, you can check the logs from the `subscriber-app` to see that it received a notification or use the application APIs (running on the port 8082): 
 
 ```
-curl http://localhost:8082/
+curl http://localhost:8082/notifications
 ```
 
 
