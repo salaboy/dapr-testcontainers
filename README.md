@@ -171,3 +171,9 @@ curl http://localhost:8082/notifications
 
 Enjoy your local development experience with Dapr and Testcontainers :metal:
 
+### Clean up Local Environment 
+
+Remove all running Docker Containers: 
+```
+docker rm -f $(docker ps -aq)
+```
